@@ -1,0 +1,36 @@
+import  *  as  cheerio  from  'cheerio' ;
+async function fetchData(url) {
+    const response = await cheerio.fromURL('https://books.toscrape.com')
+    const data = response.extract({
+        publications: [
+          {
+            selector: 'li.col-xs-6',
+value: {
+              img_url: {
+                selector: '.image_container img',
+                value: 'src',
+              },
+              title: {
+                selector: 'h3 a',
+                value: 'title', 
+              },
+              price: {
+                selector: '.product_price .price_color',
+                value: 'innerHTML',
+              },
+              inStock: {
+                selector: '.instock.availability',
+                value: 'innerText',
+              },
+              rate: {
+                selector: '.star-rating',
+                value: 'value'
+              }
+            },
+          },
+        ],
+      });
+      console.log(data)
+}
+fetchData()
+
